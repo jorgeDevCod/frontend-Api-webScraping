@@ -1,5 +1,7 @@
 // Configuración
-const API_URL = '/api';
+const API_URL = process.env.NODE_ENV === 'production'
+    ? 'https://api-webscraping-for-metadata.vercel.app/'
+    : 'http://localhost:3000/api';
 const BATCH_SIZE = 250;
 const MAX_URLS = 300;
 const RATE_LIMIT_DELAY = 1000;
