@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Herramienta profesional para análisis de meta tags y SEO. Analiza múltiples URLs simultáneamente y obtén información detallada sobre títulos, descripciones y etiquetas Open Graph.">
+    <meta name="author" content="SEO Tools">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Meta Tag Analyzer Pro - Herramienta Profesional SEO">
+    <meta property="og:description" content="Analiza meta tags de múltiples URLs simultáneamente. Herramienta profesional para SEO y análisis web.">
+    <meta property="og:type" content="website">
+    <title>Meta Tag Analyzer Pro - Herramienta Profesional SEO</title>
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js" integrity="sha512-r22gChDnGvBylk90+2e/ycr3RVrDi8DIOkIGNhJlKfuyQM4tIRAI062MaV8sfjQKYVGjOBaZBOA87z+IhZE9DA==" crossorigin="anonymous" referrerpolicy="no-referrer">></script>
+    <link rel="icon" href="./assets/logoscraping.png">
+    <link rel="stylesheet" href="css/style.css">
+    <script type="module" src="js/main.js" defer></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <img src="./assets/logo.webp" alt="Logo Meta Tag Analyzer Pro" class="header-logo">
+                <div class="header-text">
+                    <h1>Web Scraping: <span>Meta Tag Analyzer Pro</span></h1>
+                    <p>Analiza profesionalmente tus páginas web a través de sus URLs y obtén sus meta tags de forma sencilla y rápida.</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Card informativo -->
+        <div class="info-card">
+            <div class="info-card-icon">
+                <img src="./assets/scraping-info.jpg" alt="Ícono web scraping">
+            </div>
+            <div class="info-card-content">
+                <h2>Guía de Uso Rápido</h2>
+                <div class="info-steps">
+                    <div class="steps">
+                        <span class="steps-number">1</span>
+                        <p>Ingresa las URLs que deseas analizar (una por línea)</p>
+                    </div>
+                    <div class="steps">
+                        <span class="steps-number">2</span>
+                        <p>Haz clic en "Analizar Meta Tags" para iniciar el proceso</p>
+                    </div>
+                    <div class="steps">
+                        <span class="steps-number">3</span>
+                        <p>Visualiza y exporta los resultados del análisis</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="urls">URLs para analizar</label>
+            <p id="url-counter" class="no-urls">URLs ingresadas: 0</p>
+            <div class="textarea-controls">
+                <button id="scrapeButton" class="action-button">
+                    Obtener Meta Tags
+                </button>
+                <button id="clearUrls" class="clear-button">
+                    Limpiar URLs 🗑️
+                </button>
+            </div>
+            <textarea id="urls" placeholder="https://ejemplo.com/pagina1&#10;https://ejemplo.com/pagina2&#10;https://ejemplo.com/pagina3">
+            </textarea>
+
+        </div>
+
+        <div class="loader-container" id="loader-container" style="display: none;">
+            <div class="loader-content">
+                <div class="loader-ring"></div>
+
+                <div class="steps-container">
+                    <div class="step-line"></div>
+                    <div class="step step-1 active">1</div>
+                    <div class="step step-2">2</div>
+                    <div class="step step-3">3</div>
+                </div>
+
+                <div class="loader-text" id="loader-text">Iniciando análisis...</div>
+                <div class="progress-percentage"> <span id="progress-percentage">0</span>% </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+
+                <div class="urls-counter">
+                    Procesando: <span id="progress-status">0/0</span>
+                </div>
+
+                <button id="cancelButton">Cancelar Análisis ❌</button>
+            </div>
+        </div>
+
+        <div class="error-message" id="errorMessage"></div>
+
+
+        <div class="results-section">
+            <div class="results-header">
+                <div class="results-title">
+                    <h2>Resultados del Análisis: <span id="results-counter" class="results-counter">(0 resultados)</span></h2>
+
+                </div>
+                <button class="copy-button">Exportar Resultados</button>
+                <button id="clearResults" class="clear-button">
+                    Limpiar Resultados 🗑️
+                </button>
+            </div>
+
+            <div class="selection-controls">
+                <div class="items-per-page">
+                    <label for="page-size">Mostrar:</label>
+                    <select id="page-size" class="page-size-select">
+                        <option value="10">10 por página</option>
+                        <option value="30" selected>30 por página</option>
+                        <option value="50">50 por página</option>
+                        <option value="100">100 por página</option>
+                    </select>
+                </div>
+                <div class="selection-actions">
+                    <span id="selected-count" class="selected-count">0 elementos seleccionados</span>
+                </div>
+            </div>
+
+
+            <div class="scroll-container">
+                <table id="result-table">
+                    <thead>
+                        <tr>
+                            <th>URL Page</th>
+                            <th>Title</th>
+                            <th>Descripción</th>
+                            <th>Canonical</th>
+                            <th>H1</th>
+                            <th>OG: Title</th>
+                            <th>OG: Description</th>
+                            <th>OG: URL</th>
+                        </tr>
+                    </thead>
+                    <tbody id="result-body"></tbody>
+                </table>
+            </div>
+
+            <div class="pagination-wrapper">
+                <div id="pagination-controls" class="pagination-controls">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
